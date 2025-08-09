@@ -1,0 +1,398 @@
+.post-container {
+  max-width: 100%;
+  margin: 0;
+  padding: 20px;
+}
+
+/* Create Post Section */
+.create-post-section {
+  margin-bottom: 20px;
+}
+
+.create-post-card {
+  background: white;
+  border: 1px solid #e1e8ed;
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.post-input-container {
+  display: flex;
+  gap: 12px;
+}
+
+.user-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.post-input-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.post-input {
+  width: 100%;
+  border: none;
+  outline: none;
+  resize: none;
+  font-size: 20px;
+  line-height: 1.5;
+  color: #0f1419;
+  background: transparent;
+  font-family: inherit;
+}
+
+.post-input::placeholder {
+  color: #536471;
+}
+
+.image-preview-container {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  max-width: 100%;
+}
+
+.image-preview {
+  width: 100%;
+  max-height: 300px;
+  object-fit: cover;
+}
+
+.remove-image-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(0, 0, 0, 0.7);
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
+}
+
+.remove-image-btn:hover {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.remove-icon {
+  width: 18px;
+  height: 18px;
+  fill: white;
+}
+
+.post-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 12px;
+  border-top: 1px solid #e1e8ed;
+}
+
+.post-attachments {
+  display: flex;
+  gap: 8px;
+}
+
+.file-input {
+  display: none;
+}
+
+.attachment-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  transition: background-color 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.attachment-btn:hover {
+  background-color: #e8f5fd;
+}
+
+.attachment-icon {
+  width: 20px;
+  height: 20px;
+  fill: #1d9bf0;
+}
+
+.post-submit-btn {
+  background-color: #1d9bf0;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  padding: 8px 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.post-submit-btn:hover:not(:disabled) {
+  background-color: #1a8cd8;
+}
+
+.post-submit-btn:disabled {
+  background-color: #1d9bf0;
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Posts Feed */
+.posts-feed {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.no-posts {
+  text-align: center;
+  padding: 40px 20px;
+  color: #536471;
+  background: white;
+  border: 1px solid #e1e8ed;
+  border-radius: 16px;
+}
+
+.post-card {
+  background: white;
+  border: 1px solid #e1e8ed;
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.2s ease;
+}
+
+.post-card:hover {
+  background-color: #f7f9fa;
+}
+
+.post-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 12px;
+  position: relative;
+}
+
+.post-user-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.post-user-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.post-user-name {
+  font-weight: 700;
+  color: #0f1419;
+  font-size: 15px;
+}
+
+.post-user-handle {
+  color: #536471;
+  font-size: 14px;
+}
+
+.post-time {
+  color: #536471;
+  font-size: 14px;
+}
+
+.delete-post-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 50%;
+  transition: background-color 0.2s ease;
+  opacity: 0.7;
+}
+
+.delete-post-btn:hover {
+  background-color: #f7f9fa;
+  opacity: 1;
+}
+
+.delete-icon {
+  width: 18px;
+  height: 18px;
+  fill: #536471;
+}
+
+/* Follow Button Styles */
+.follow-btn {
+  background: #1d9bf0;
+  color: white;
+  border: none;
+  border-radius: 9999px;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-left: auto;
+}
+
+.follow-btn:hover:not(:disabled) {
+  background: #1a8cd8;
+}
+
+.follow-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.follow-btn.following {
+  background: #e1e8ed;
+  color: #0f1419;
+}
+
+.follow-btn.following:hover:not(:disabled) {
+  background: #d1d9dd;
+}
+
+.post-content {
+  margin-bottom: 12px;
+}
+
+.reshare-indicator {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #536471;
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+.reshare-icon {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+}
+
+.post-text {
+  font-size: 15px;
+  line-height: 1.5;
+  color: #0f1419;
+  margin-bottom: 12px;
+  word-wrap: break-word;
+}
+
+.post-image-container {
+  border-radius: 16px;
+  overflow: hidden;
+  margin-top: 12px;
+}
+
+.post-image {
+  width: 100%;
+  max-height: 400px;
+  object-fit: cover;
+}
+
+.post-actions-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 12px;
+  border-top: 1px solid #e1e8ed;
+}
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+  color: #536471;
+  font-size: 13px;
+}
+
+.action-btn:hover {
+  background-color: #e8f5fd;
+}
+
+.action-icon {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}
+
+.like-btn.liked {
+  color: #f91880;
+}
+
+.like-btn.liked:hover {
+  background-color: #fce8f3;
+}
+
+.reshare-btn:hover {
+  color: #00ba7c;
+  background-color: #e8f8f3;
+}
+
+.comment-btn:hover {
+  color: #1d9bf0;
+  background-color: #e8f5fd;
+}
+
+/* Loading state */
+.loading {
+  text-align: center;
+  padding: 40px;
+  color: #536471;
+  font-size: 16px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .post-container {
+    padding: 16px;
+  }
+  
+  .create-post-card,
+  .post-card {
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+  }
+  
+  .post-input {
+    font-size: 18px;
+  }
+  
+  .post-actions-bar {
+    gap: 8px;
+  }
+  
+  .action-btn {
+    flex: 1;
+    justify-content: center;
+  }
+} 
