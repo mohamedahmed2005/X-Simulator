@@ -10,6 +10,8 @@ const Post = ({ user, onPostCreated, onPostDeleted, onFollowUpdate }) => {
   const [isCreating, setIsCreating] = useState(false);
   const [loading, setLoading] = useState(true);
   const [followLoading, setFollowLoading] = useState({});
+  const [commentInputs, setCommentInputs] = useState({});
+  const [editingComment, setEditingComment] = useState({ id: null, text: '', postId: null });
 
   useEffect(() => {
     fetchPosts();
@@ -28,6 +30,56 @@ const Post = ({ user, onPostCreated, onPostDeleted, onFollowUpdate }) => {
       console.error('Error fetching posts:', error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleCommentInputChange = (postId, value) => {
+    setCommentInputs(prev => ({ ...prev, [postId]: value }));
+  };
+
+  const submitComment = async (postId) => {
+    const text = (commentInputs[postId] || '').trim();
+    if (!text) return;
+    try {
+      await axios.post(`/api/posts/comment/${postId}`, { text }, { withCredentials: true });
+      setCommentInputs(prev => ({ ...prev, [postId]: '' }));
+      fetchPosts();
+    } catch (error) {
+      console.error('Error commenting:', error);
+      alert('Failed to add comment');
+    }
+  };
+
+  const startEditComment = (postId, comment) => {
+    setEditingComment({ id: comment._id, text: comment.text, postId });
+  };
+
+  const cancelEditComment = () => setEditingComment({ id: null, text: '', postId: null });
+
+  const saveEditComment = async () => {
+    const { id, text, postId } = editingComment;
+    if (!id || !text.trim()) return;
+    try {
+      await axios.post(`/api/posts/edit-comment/${id}`, { text: text.trim(), postId }, { withCredentials: true });
+      cancelEditComment();
+      fetchPosts();
+    } catch (error) {
+      console.error('Error editing comment:', error);
+      alert('Failed to edit comment');
+    }
+  };
+
+  const deleteComment = async (postId, commentId) => {
+    if (!window.confirm('Delete this comment?')) return;
+    try {
+      await axios.delete(`/api/posts/delete-comment/${commentId}`, {
+        data: { postId },
+        withCredentials: true
+      });
+      fetchPosts();
+    } catch (error) {
+      console.error('Error deleting comment:', error);
+      alert('Failed to delete comment');
     }
   };
 
@@ -363,6 +415,60 @@ const Post = ({ user, onPostCreated, onPostDeleted, onFollowUpdate }) => {
                   </svg>
                   <span>Reshare</span>
                 </button>
+              </div>
+
+              {/* Comments Section */}
+              <div className="comments-section">
+                {post.comments && post.comments.length > 0 && (
+                  <div className="comments-list">
+                    {post.comments.map((comment) => (
+                      <div key={comment._id} className="comment-item">
+                        <img
+                          src={comment.user?.profileImg || 'https://via.placeholder.com/32'}
+                          alt="Profile"
+                          className="comment-avatar"
+                        />
+                        <div className="comment-body">
+                          <div className="comment-header">
+                            <span className="comment-author">{comment.user?.fullName || 'User'}</span>
+                            <span className="comment-username">@{comment.user?.username || 'username'}</span>
+                          </div>
+                          {editingComment.id === comment._id ? (
+                            <div className="comment-edit-row">
+                              <input
+                                value={editingComment.text}
+                                onChange={(e) => setEditingComment(prev => ({ ...prev, text: e.target.value }))}
+                              />
+                              <div className="comment-edit-actions">
+                                <button onClick={saveEditComment}>Save</button>
+                                <button onClick={cancelEditComment} className="secondary">Cancel</button>
+                              </div>
+                            </div>
+                          ) : (
+                            <p className="comment-text">{comment.text}</p>
+                          )}
+                        </div>
+                        {(comment.user?._id === user?._id) && editingComment.id !== comment._id && (
+                          <div className="comment-actions">
+                            <button onClick={() => startEditComment(post._id, comment)}>Edit</button>
+                            <button onClick={() => deleteComment(post._id, comment._id)} className="danger">Delete</button>
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {/* Add comment */}
+                <div className="comment-input-row">
+                  <input
+                    type="text"
+                    placeholder="Write a comment"
+                    value={commentInputs[post._id] || ''}
+                    onChange={(e) => handleCommentInputChange(post._id, e.target.value)}
+                  />
+                  <button onClick={() => submitComment(post._id)} disabled={!commentInputs[post._id]?.trim()}>Comment</button>
+                </div>
               </div>
             </div>
           ))

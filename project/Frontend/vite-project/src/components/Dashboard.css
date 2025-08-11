@@ -68,6 +68,7 @@
 
 /* Profile Content */
 .profile-content {
+  justify-content: left;
   max-width: 100%;
 }
 

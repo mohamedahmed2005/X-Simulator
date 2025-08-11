@@ -227,14 +227,15 @@ export const editComment = async (req, res) => {
             return res.status(404).json({ success: false, message: "Post not found" });
         }
 
-        if (post.user.toString() !== userId.toString()) {
-            return res.status(401).json({ success: false, message: "Unauthorized" });
-        }
-
         const comment = post.comments.id(req.params.id)
 
         if (!comment) {
             return res.status(404).json({ success: false, message: "Comment not found" });
+        }
+
+        // Only the comment owner can edit their comment
+        if (comment.user.toString() !== userId.toString()) {
+            return res.status(401).json({ success: false, message: "Unauthorized" });
         }
 
         comment.text = text;
@@ -259,14 +260,18 @@ export const deleteComment = async (req, res) => {
             return res.status(404).json({ success: false, message: "Post not found" });
         }
 
-        if (post.user.toString() !== userId.toString()) {
-            return res.status(401).json({ success: false, message: "Unauthorized" });
-        }
-
         const comment = post.comments.id(req.params.id)
 
         if (!comment) {
             return res.status(404).json({ success: false, message: "Comment not found" });
+        }
+
+        // Allow deletion if the requester is the comment owner or the post owner
+        const isCommentOwner = comment.user.toString() === userId.toString();
+        const isPostOwner = post.user.toString() === userId.toString();
+
+        if (!isCommentOwner && !isPostOwner) {
+            return res.status(401).json({ success: false, message: "Unauthorized" });
         }
 
         post.comments.pull(req.params.id);
