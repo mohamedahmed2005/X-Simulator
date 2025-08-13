@@ -206,10 +206,22 @@ export const commentOnPost = async (req, res) => {
 
         await post.save();
 
+        // Populate the user information for the new comment
+        const populatedPost = await Post.findById(post._id).populate({
+            path: "comments",
+            populate: {
+                path: "user",
+                select: "-password"
+            }
+        });
+
+        // Get the newly added comment (last one in the array)
+        const newComment = populatedPost.comments[populatedPost.comments.length - 1];
+
         // Create notification for comment
         await createNotification(userId, post.user, 'comment', post._id);
 
-        return res.status(200).json({ success: true, post });
+        return res.status(200).json({ success: true, comment: newComment });
 
     } catch (error) {
         return res.status(500).json({ success: false, message: "Server Error", error: error.message });

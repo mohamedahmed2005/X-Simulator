@@ -4,12 +4,11 @@ import Login from './components/Login';
 import Dashboard from './components/Dashboard';
 import Welcome from './components/Welcome';
 import ProtectedRoute from './components/ProtectedRoute';
-import './App.css';
 
 function App() {
   return (
     <Router>
-      <div className="App">
+      <div className="min-h-screen bg-x-black text-white">
         <Routes>
           <Route path="/" element={<Welcome />} />
           <Route path="/signup" element={<Signup />} />

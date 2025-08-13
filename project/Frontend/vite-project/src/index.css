@@ -1,68 +1,31 @@
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
+@layer base {
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: #000000;
+    color: #ffffff;
+    min-height: 100vh;
   }
-  a:hover {
-    color: #747bff;
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-x-blue hover:bg-x-blue-hover text-white font-bold py-3 px-6 rounded-full transition-colors duration-200;
   }
-  button {
-    background-color: #f9f9f9;
+  
+  .btn-secondary {
+    @apply bg-transparent text-x-text-gray border border-x-border hover:bg-x-light-gray hover:border-x-text-gray font-bold py-3 px-6 rounded-full transition-all duration-200;
+  }
+  
+  .card {
+    @apply bg-x-dark-gray border border-x-border rounded-2xl p-6;
+  }
+  
+  .input-field {
+    @apply w-full px-4 py-3 bg-x-light-gray border border-x-border rounded-lg text-white placeholder-x-text-gray focus:outline-none focus:border-x-blue focus:bg-x-dark-gray transition-all duration-200;
   }
 }

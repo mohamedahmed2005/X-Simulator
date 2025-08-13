@@ -12,7 +12,7 @@ const ProtectedRoute = ({ children }) => {
       try {
         const res = await axios.get('/api/auth/me', { withCredentials: true });
         if (isMounted) setAuthorized(!!res.data?.success);
-      } catch (err) {
+      } catch {
         if (isMounted) setAuthorized(false);
       } finally {
         if (isMounted) setLoading(false);
