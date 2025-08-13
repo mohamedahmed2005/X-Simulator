@@ -193,9 +193,13 @@ export const updateProfilePicture = async (req, res) => {
             }
         }
 
+        // Convert buffer to base64 for Cloudinary upload
+        const b64 = Buffer.from(req.file.buffer).toString('base64');
+        const dataURI = `data:${req.file.mimetype};base64,${b64}`;
+
         // Upload new image to Cloudinary
         console.log('Uploading to Cloudinary...');
-        const uploadedResponse = await cloudinary.uploader.upload(req.file.path, {
+        const uploadedResponse = await cloudinary.uploader.upload(dataURI, {
             folder: "profile-pictures",
             transformation: [
                 { width: 400, height: 400, crop: "fill" },
@@ -209,14 +213,6 @@ export const updateProfilePicture = async (req, res) => {
         user.profileImg = uploadedResponse.secure_url;
         await user.save();
 
-        // Clean up the temporary file
-        try {
-            fs.unlinkSync(req.file.path);
-            console.log('Temporary file cleaned up');
-        } catch (error) {
-            console.log("Error deleting temporary file:", error);
-        }
-
         // Remove password from response
         user.password = undefined;
 
@@ -229,15 +225,6 @@ export const updateProfilePicture = async (req, res) => {
 
     } catch (error) {
         console.error("Error updating profile picture:", error);
-        
-        // Clean up the temporary file in case of error
-        if (req.file && req.file.path) {
-            try {
-                fs.unlinkSync(req.file.path);
-            } catch (cleanupError) {
-                console.log("Error deleting temporary file:", cleanupError);
-            }
-        }
         
         return res.status(500).json({ 
             success: false, 

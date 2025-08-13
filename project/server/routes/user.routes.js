@@ -1,33 +1,13 @@
 import express from 'express'
 import multer from 'multer'
-import path from 'path'
-import { fileURLToPath } from 'url'
 import { protectedRoute } from '../middleware/auth.middleware.js'
 import { getSuggestedUsers, getUserProfile, searchUsers, toggleFollow, updateProfile, updateProfilePicture, getAllUsers } from '../controllers/user.controller.js'
 
 const router = express.Router()
 
-// Get __dirname equivalent in ES modules
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-// Configure multer for file uploads
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        const uploadsDir = path.join(__dirname, '..', 'uploads');
-        console.log('Saving file to directory:', uploadsDir);
-        cb(null, uploadsDir)
-    },
-    filename: function (req, file, cb) {
-        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
-        const filename = file.fieldname + '-' + uniqueSuffix + '.' + file.originalname.split('.').pop();
-        console.log('Generated filename:', filename);
-        cb(null, filename)
-    }
-})
-
+// Configure multer for serverless environment (memory storage)
 const upload = multer({ 
-    storage: storage,
+    storage: multer.memoryStorage(), // Use memory storage for serverless
     limits: {
         fileSize: 5 * 1024 * 1024 // 5MB limit
     },
