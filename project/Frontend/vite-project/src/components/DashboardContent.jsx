@@ -8,10 +8,11 @@ const DashboardContent = ({
   onPostCreated, 
   onPostDeleted, 
   onFollowUpdate, 
-  onUserUpdate 
+  onUserUpdate,
+  onMarkAllAsRead
 }) => {
   return (
-    <div className="flex-1 border-r border-x-border min-h-[calc(100vh-60px)] max-w-full m-0 w-full">
+    <div className="flex-1 min-h-[calc(100vh-60px)] max-w-full m-0 w-full">
       <div className="sticky top-15 bg-black/65 backdrop-blur-xl border-b border-x-border p-4 z-50">
         <h1 className="text-xl font-bold m-0 text-white">
           {activeTab.charAt(0).toUpperCase() + activeTab.slice(1)}
@@ -31,12 +32,18 @@ const DashboardContent = ({
         )}
         
         {activeTab === 'profile' && (
-          <Profile user={user} onUserUpdate={onUserUpdate} />
+          <Profile 
+            user={user} 
+            onUserUpdate={onUserUpdate}
+            onFollowUpdate={onFollowUpdate}
+          />
         )}
         
         {activeTab === 'notifications' && (
           <div className="max-w-full">
-            <Notifications />
+            <Notifications 
+              onMarkAllAsRead={onMarkAllAsRead}
+            />
           </div>
         )}
       </div>

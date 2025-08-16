@@ -43,6 +43,7 @@ export const usePostEditing = () => {
   };
 
   const finishEditing = () => {
+    setEditingPost({ id: null, text: '', image: null, imagePreview: null });
     setIsEditing(false);
   };
 

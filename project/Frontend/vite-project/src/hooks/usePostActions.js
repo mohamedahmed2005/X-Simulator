@@ -27,7 +27,11 @@ export const usePostActions = (user, updatePostLikes, removePost, onPostDeleted)
       });
 
       if (response.data.success) {
-        return { success: true, message: 'Post reshared successfully!' };
+        return { 
+          success: true, 
+          message: 'Post reshared successfully!',
+          repost: response.data.resharePost 
+        };
       }
     } catch (error) {
       console.error('Error resharing post:', error);

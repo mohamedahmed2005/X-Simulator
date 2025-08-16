@@ -18,6 +18,22 @@ export const useNotifications = () => {
     }
   };
 
+  const markAllAsRead = async () => {
+    try {
+      const response = await axios.post('/api/notifications/mark-all-read', {}, {
+        withCredentials: true
+      });
+      
+      if (response.data.success) {
+        setUnreadNotifications(0);
+        return { success: true };
+      }
+    } catch (error) {
+      console.error('Error marking notifications as read:', error);
+      return { success: false, message: 'Error marking notifications as read' };
+    }
+  };
+
   const updateUnreadCount = (count) => {
     setUnreadNotifications(count);
   };
@@ -29,6 +45,7 @@ export const useNotifications = () => {
   return {
     unreadNotifications,
     fetchUnreadNotifications,
+    markAllAsRead,
     updateUnreadCount
   };
 };

@@ -15,6 +15,7 @@ const Post = ({ user, onPostCreated, onPostDeleted, onFollowUpdate }) => {
     loading,
     fetchPosts,
     addPost,
+    addRepost,
     updatePost,
     removePost,
     updatePostLikes,
@@ -93,6 +94,7 @@ const Post = ({ user, onPostCreated, onPostDeleted, onFollowUpdate }) => {
               addComment={addComment}
               updateComment={updateComment}
               removeComment={removeComment}
+              addRepost={addRepost}
               showDeletePostModal={showDeletePostModal}
               showDeleteCommentModal={showDeleteCommentModal}
               showMessage={showMessage}

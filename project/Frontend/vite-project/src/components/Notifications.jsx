@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import ConfirmationModal from './ConfirmationModal';
 
-const Notifications = () => {
+const Notifications = ({ onMarkAllAsRead }) => {
   const [notifications, setNotifications] = useState([]);
   const [loading, setLoading] = useState(true);
   const [unreadCount, setUnreadCount] = useState(0);
@@ -16,7 +16,11 @@ const Notifications = () => {
   useEffect(() => {
     fetchNotifications();
     fetchUnreadCount();
-  }, []);
+    // Mark all notifications as read when visiting the notifications page
+    if (onMarkAllAsRead) {
+      onMarkAllAsRead();
+    }
+  }, [onMarkAllAsRead]);
 
   const fetchNotifications = async () => {
     try {

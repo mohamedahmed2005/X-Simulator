@@ -13,6 +13,7 @@ const PostItem = ({
   addComment, 
   updateComment, 
   removeComment,
+  addRepost,
   showDeletePostModal,
   showDeleteCommentModal,
   showMessage,
@@ -84,6 +85,10 @@ const PostItem = ({
     const result = await handleReshare(post._id);
     if (result.success) {
       showMessage(result.message, 'success');
+      // Immediately add the repost to the posts list
+      if (result.repost && addRepost) {
+        addRepost(result.repost);
+      }
     } else {
       showMessage(result.message, 'error');
     }

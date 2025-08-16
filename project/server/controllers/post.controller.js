@@ -374,13 +374,16 @@ export const resharePost = async (req, res) => {
 
         await resharePost.save();
 
+        // Populate user data for the repost
+        const populatedRepost = await Post.findById(resharePost._id).populate('user', '-password');
+
         // Create notification for original post author
         await createNotification(req.user._id, originalPost.user._id, 'reshare', originalPost._id);
 
         return res.status(200).json({ 
             success: true, 
             message: "Post reshared successfully",
-            resharePost 
+            resharePost: populatedRepost
         });
 
     } catch (error) {

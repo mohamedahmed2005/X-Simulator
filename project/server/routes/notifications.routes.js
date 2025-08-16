@@ -4,7 +4,8 @@ import {
     deleteNotification, 
     getNotifications, 
     getUnreadNotifications,
-    markNotificationAsRead 
+    markNotificationAsRead,
+    markAllNotificationsAsRead
 } from "../controllers/notification.controller.js";
 import { protectedRoute } from "../middleware/auth.middleware.js";
 
@@ -18,6 +19,9 @@ router.get("/unread", protectedRoute, getUnreadNotifications);
 
 // Mark a specific notification as read
 router.patch("/:id/read", protectedRoute, markNotificationAsRead);
+
+// Mark all notifications as read
+router.post("/mark-all-read", protectedRoute, markAllNotificationsAsRead);
 
 // Clear all notifications
 router.delete("/clear", protectedRoute, clearNotifications);

@@ -25,6 +25,10 @@ export const usePosts = () => {
     setPosts(prevPosts => [newPost, ...prevPosts]);
   };
 
+  const addRepost = (newRepost) => {
+    setPosts(prevPosts => [newRepost, ...prevPosts]);
+  };
+
   const updatePost = (postId, updatedPost) => {
     setPosts(prevPosts => 
       prevPosts.map(post => 
@@ -97,6 +101,7 @@ export const usePosts = () => {
     loading,
     fetchPosts,
     addPost,
+    addRepost,
     updatePost,
     removePost,
     updatePostLikes,

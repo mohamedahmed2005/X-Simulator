@@ -1,42 +1,15 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import FollowersFollowing from './FollowersFollowing';
 
-const Profile = ({ user, onUserUpdate }) => {
+const Profile = ({ user, onUserUpdate, onFollowUpdate }) => {
   const [profileImage, setProfileImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
   const [uploading, setUploading] = useState(false);
-  const [followingUsers, setFollowingUsers] = useState([]);
+
   useEffect(() => {
     document.title = 'Profile';
   }, []);
-
-  useEffect(() => {
-    if (user?.following) {
-      fetchFollowingUsers();
-    }
-  }, [user?.following]);
-
-  const fetchFollowingUsers = async () => {
-    if (!user?.following || user.following.length === 0) {
-      setFollowingUsers([]);
-      return;
-    }
-
-    try {
-      const response = await axios.get('/api/user/users', {
-        withCredentials: true
-      });
-      
-      if (response.data.success) {
-        const followingUserDetails = response.data.users.filter(userDetail => 
-          user.following.includes(userDetail._id)
-        );
-        setFollowingUsers(followingUserDetails);
-      }
-    } catch (error) {
-      console.error('Error fetching following users:', error);
-    }
-  };
 
   const handleProfileImageUpload = (event) => {
     const file = event.target.files[0];
@@ -159,38 +132,8 @@ const Profile = ({ user, onUserUpdate }) => {
         </div>
       )}
       
-      <div className="flex gap-6 py-4 border-t border-x-border justify-start">
-        <div className="flex flex-col items-start gap-1">
-          <span className="text-xl font-bold text-white">{user?.following?.length || 0}</span>
-          <span className="text-xs text-x-text-gray">Following</span>
-        </div>
-        <div className="flex flex-col items-start gap-1">
-          <span className="text-xl font-bold text-white">{user?.followers?.length || 0}</span>
-          <span className="text-xs text-x-text-gray">Followers</span>
-        </div>
-      </div>
-      
-      {/* Following List */}
-      {followingUsers.length > 0 && (
-        <div className="mt-6 p-0">
-          <h3 className="text-lg font-bold m-0 mb-4 text-white">Following</h3>
-          <div className="flex flex-col gap-3">
-            {followingUsers.map((followedUser) => (
-              <div key={followedUser._id} className="flex items-center gap-3 p-3 bg-x-dark-gray border border-x-border rounded-xl">
-                <img 
-                  src={followedUser.profileImg || 'https://via.placeholder.com/40'} 
-                  alt="Profile" 
-                  className="w-10 h-10 rounded-full object-cover"
-                />
-                <div className="flex-1">
-                  <span className="text-sm font-semibold text-white block">{followedUser.fullName}</span>
-                  <span className="text-xs text-x-text-gray block">@{followedUser.username}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
+      {/* Followers and Following Component */}
+      <FollowersFollowing user={user} onFollowUpdate={onFollowUpdate} />
     </div>
   );
 };
